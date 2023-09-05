@@ -1,8 +1,7 @@
-SELECT result.name,result.datetime
-from(
-    select rownum rnum, re.name name, re.datetime datetime
-    from (select * from animal_ins ins
-          where ins.animal_id not in(select animal_id from animal_outs)
-         order by ins.datetime) re
-)result
-where result.rnum<=3;
+SELECT A.NAME, A.DATETIME
+FROM ANIMAL_INS A
+LEFT JOIN ANIMAL_OUTS B
+ON A.ANIMAL_ID = B.ANIMAL_ID
+WHERE B.ANIMAL_ID IS NULL
+ORDER BY A.DATETIME
+LIMIT 3;
