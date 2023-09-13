@@ -1,4 +1,5 @@
-select ANIMAL_TYPE , count (*) as count
-from animal_ins
-group by animal_type 
-order by animal_type asc;
+SELECT ANIMAL_TYPE, COUNT(ANIMAL_TYPE)
+FROM ANIMAL_INS 
+WHERE REGEXP_LIKE(ANIMAL_TYPE, 'Cat|Dog')
+GROUP BY ANIMAL_TYPE
+ORDER BY ANIMAL_TYPE;
