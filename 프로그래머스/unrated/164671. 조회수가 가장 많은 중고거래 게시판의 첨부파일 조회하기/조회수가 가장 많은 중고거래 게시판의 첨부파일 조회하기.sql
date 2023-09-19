@@ -1,13 +1,5 @@
-SELECT 
-    '/home/grep/src/' || BOARD_ID || '/' || FILE_ID || FILE_NAME || FILE_EXT AS FILE_PATH
-FROM USED_GOODS_FILE 
-WHERE 1=1
-AND BOARD_ID = (
-    SELECT
-        BOARD_ID
-    FROM USED_GOODS_BOARD 
-    WHERE 1=1
-    ORDER BY VIEWS DESC
-    FETCH FIRST 1 ROWS ONLY
-)
-ORDER BY FILE_ID DESC
+SELECT CONCAT('/home/grep/src/', b.board_id, '/', file_id, file_name, f.file_ext) AS FILE_PATH 
+FROM used_goods_board AS b
+INNER JOIN used_goods_file AS f USING(board_id)
+WHERE b.views = (SELECT DISTINCT(views) FROM used_goods_board ORDER BY views DESC LIMIT 1)
+ORDER BY f.file_id DESC;
